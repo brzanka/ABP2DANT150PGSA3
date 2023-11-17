@@ -41,20 +41,28 @@ uint32_t ABP2GetRaw ()
 
 double ABP2Calc (uint32_t data)
 {
-	double outputmax = 15099494; // output at maximum pressure [counts]
-	double outputmin = 1677722; // output at minimum pressure [counts]
-	double pmax = 150; // maximum value of pressure range psi
-	double pmin = 0; // minimum value of pressure range psi
-	double pressure = 0; // pressure reading psi
 	uint32_t press_counts = 0;
+	uint32_t outputmax = 15099494; // output at maximum pressure [counts]
+	uint32_t outputmin = 1677722; // output at minimum pressure [counts]
+	uint32_t pmax = 150; // maximum value of pressure range psi
+	uint32_t pmin = 0; // minimum value of pressure range psi
+
+	double pressure = 0; // pressure reading psi
+
 	uint8_t temp[4];
 
 	temp[1] = (uint8_t) (data>>16);
 	temp[2] = (uint8_t) (data>>8);
 	temp[3] = (uint8_t) data;
 
-	press_counts = temp[3] + (((uint32_t)temp[2])<<8) +  (((uint32_t)temp[3])<<16);
-	pressure = ((press_counts - outputmin) * (pmax - pmin)) / (outputmax - outputmin) + pmin;
+	press_counts = temp[3] + (((uint32_t)temp[2])<<8) +  (((uint32_t)temp[1])<<16);
+
+    uint32_t numerator = ((uint32_t)press_counts - outputmin) * (pmax - pmin);
+    uint32_t denominator = outputmax - outputmin;
+
+    pressure = ((double)numerator) / denominator + pmin;
+
 	return pressure;
 }
+
 
