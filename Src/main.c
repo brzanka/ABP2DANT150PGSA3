@@ -107,9 +107,6 @@ HAL_Delay(3);
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-//	  press_counts = receive3[3] + (((uint32_t)receive3[2])<<8) +  (((uint32_t)receive3[3])<<16);
-//	  pressure = ((press_counts - outputmin) * (pmax - pmin)) / (outputmax - outputmin) + pmin;
-
 	  if(flag == 1)
 	      {
 	        if (ABP2Write () == 0)
@@ -119,7 +116,7 @@ HAL_Delay(3);
 	        	//HAL_UART_Transmit(&huart2, (uint8_t*)'a', 1, 1000);
 	        }
 	        flag = 0;
-	      }
+	       }
 
     /* USER CODE END WHILE */
 
