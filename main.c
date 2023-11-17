@@ -107,11 +107,12 @@ uint8_t receive3[4] = {0, 0, 0, 0};
 
 char x = '1';
 double press_counts = 0;
-double outputmax = 15099494; // output at maximum pressure [counts]
-double outputmin = 1677722; // output at minimum pressure [counts]
+double outputmax = 15099494; // output at maximum pressure [counts] NEEDS CALIBRATION
+double outputmin = 1677722; // output at minimum pressure [counts] NEEDS CALIBRATION
 int pmax = 150; // maximum value of pressure range psi
-int pmin = -150; // minimum value of pressure range psi
+int pmin = 0; // minimum value of pressure range psi
 double pressure = 0; // pressure reading psi
+	
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -137,6 +138,7 @@ double pressure = 0; // pressure reading psi
 
 	  press_counts = receive3[3] + receive3[2] * 256 + receive3[1] * 65536;
 	  pressure = ((press_counts - outputmin) * (pmax - pmin)) / (outputmax - outputmin) + pmin;
+	  
 	 // HAL_UART_Transmit(&huart1, (uint8_t*)&receive3, 4, 100);
     /* USER CODE END WHILE */
 
