@@ -109,8 +109,8 @@ char x = '1';
 double press_counts = 0;
 double outputmax = 15099494; // output at maximum pressure [counts] NEEDS CALIBRATION
 double outputmin = 1677722; // output at minimum pressure [counts] NEEDS CALIBRATION
-int pmax = 150; // maximum value of pressure range psi
-int pmin = 0; // minimum value of pressure range psi
+double pmax = 150; // maximum value of pressure range psi
+double pmin = 0; // minimum value of pressure range psi
 double pressure = 0; // pressure reading psi
 
 HAL_Delay(3);
