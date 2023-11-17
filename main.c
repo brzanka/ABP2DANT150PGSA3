@@ -112,7 +112,8 @@ double outputmin = 1677722; // output at minimum pressure [counts] NEEDS CALIBRA
 int pmax = 150; // maximum value of pressure range psi
 int pmin = 0; // minimum value of pressure range psi
 double pressure = 0; // pressure reading psi
-	
+
+HAL_Delay(3);
   /* USER CODE END 2 */
 
   /* Infinite loop */
