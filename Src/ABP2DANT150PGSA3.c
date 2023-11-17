@@ -57,7 +57,7 @@ double ABP2Calc (uint32_t data)
 
 	press_counts = temp[3] + (((uint32_t)temp[2])<<8) +  (((uint32_t)temp[1])<<16);
 
-    uint32_t numerator = ((uint32_t)press_counts - outputmin) * (pmax - pmin);
+    uint32_t numerator = (press_counts - outputmin) * (pmax - pmin);
     uint32_t denominator = outputmax - outputmin;
 
     pressure = ((double)numerator) / denominator + pmin;
