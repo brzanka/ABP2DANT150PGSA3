@@ -2,7 +2,7 @@
  * ABP2DANT150PGSA3.h
  *
  *  Created on: Nov 17, 2023
- *      Author: p2166
+ *      Author: brzanka
  */
 
 #ifndef INC_ABP2DANT150PGSA3_H_
