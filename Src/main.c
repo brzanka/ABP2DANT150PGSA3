@@ -20,7 +20,6 @@
 #include "main.h"
 #include "spi.h"
 #include "tim.h"
-#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -46,7 +45,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t flag = 0;
+int flag = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -59,7 +58,7 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 int _write(int fd, char* ptr, int len)
 {
-    HAL_UART_Transmit(&huart2, (uint8_t *) ptr, len, HAL_MAX_DELAY);
+    //HAL_UART_Transmit(&huart2, (uint8_t *) ptr, len, HAL_MAX_DELAY);
     return len;
 }
 /* USER CODE END 0 */
@@ -93,14 +92,14 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_SPI1_Init();
-  MX_TIM2_Init();
-  MX_USART2_UART_Init();
+  MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
 
 double pressure = 0; // pressure reading psi
 uint32_t dataRaw = 0;
 
 HAL_Delay(3);
+HAL_TIM_Base_Start_IT(&htim3);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -109,14 +108,14 @@ HAL_Delay(3);
   {
 	  if(flag == 1)
 	      {
-	        if (ABP2Write () == 0)
-	        {
+		  	  flag = 0;
+		  	  if (ABP2Write() == 0)
+		  	  {
 	        	dataRaw = ABP2GetRaw();
 	        	pressure = ABP2Calc (dataRaw);
 	        	//HAL_UART_Transmit(&huart2, (uint8_t*)'a', 1, 1000);
-	        }
-	        flag = 0;
-	       }
+		  	  }
+	      }
 
     /* USER CODE END WHILE */
 
@@ -169,9 +168,10 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-  if (htim == &htim2)
+  // Check which version of the timer triggered this callback and toggle LED
+  if (htim == &htim3 )
   {
-    flag = 1;
+	  flag = 1;
   }
 }
 /* USER CODE END 4 */
